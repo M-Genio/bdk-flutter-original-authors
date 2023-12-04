@@ -127,13 +127,14 @@ class Blockchain {
   }
 
   /// The function for broadcasting a transaction
-  Future<void> broadcast(Transaction tx) async {
+  Future<String?> broadcast(Transaction tx) async {
     try {
       final txid = await loaderApi.broadcastStaticMethodApi(
           blockchainId: _blockchain, tx: tx._tx!);
       if (kDebugMode) {
         print(txid);
       }
+      return txid;
     } on FfiException catch (e) {
       throw handleException(e.message);
     }
